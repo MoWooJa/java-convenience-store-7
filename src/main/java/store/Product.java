@@ -8,20 +8,18 @@ public class Product {
     private String promotionName;
 
 
-    public boolean canBuyProduct(int quantity) {
+    public void canBuyProduct(int quantity) {
         //일반 재고를 기준으로 재고 초과인지 체크
         if (quantity > regularQuantity) {
             throw new IllegalArgumentException("재고 초과 구매 X");
         }
         //프로모션 기간이면..?
-        return Boolean.TRUE;
     }
-//    public Product buyProduct(int quantity) {
-//        if (canBuyProduct(quantity)) {
-//            regularQuantity -= quantity;
-//        }
-//        return this;
-//    }
+
+    public void decrementRegularQuantity(int quantity) {
+        regularQuantity -= quantity;
+    }
+
     public String getName() {
         return name;
     }

@@ -18,7 +18,40 @@ public class Products {
         return products;
     }
 
-//    public canBuyProducts(List<OrderItem> orderItems) {
-//
-//    }
+    public Receipt buyProductsIfYouCan(List<OrderItem> orderItems) {
+        for (OrderItem orderItem : orderItems) {
+            Product findProduct = findProduct(orderItem.getItemName());
+            findProduct.canBuyProduct(orderItem.getQuantity());
+        }
+
+        //throw가 안된 경우(재고 초과가 없는 정상 케이스)
+        Receipt orderRecords = new Receipt();
+
+        for (OrderItem orderItem : orderItems) {
+            Product findProduct = findProduct(orderItem.getItemName());
+            findProduct.decrementRegularQuantity(orderItem.getQuantity());
+
+            //필수로 고쳐야 함
+            //필수로 고쳐야 함
+            OrderRecord orderRecord = new OrderRecord(
+                    orderItem.getItemName(),
+                    orderItem.getQuantity(),
+                    orderItem.getQuantity(),
+                    0
+            );
+            //필수로 고쳐야 함
+            //필수로 고쳐야 함
+            orderRecords.addRecord(orderRecord);
+        }
+        return orderRecords;
+    }
+
+    private Product findProduct(String productName) {
+        for (Map.Entry<String, Product> entry : products.entrySet()) {
+            if (entry.getKey().equals(productName)) {
+                return entry.getValue();
+            }
+        }
+        throw new IllegalArgumentException("ERROR : 없는 상품입니다.");
+    }
 }

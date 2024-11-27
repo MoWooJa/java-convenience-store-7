@@ -24,23 +24,55 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        String input = inputView.getInput();
-        List<OrderItem> orderItems = Parser.parse(input);
+        outputView.printProducts(products.getProducts());
 
-        for (OrderItem orderItem : orderItems) {
-            System.out.println(orderItem.toString());
+        String input;
+        List<OrderItem> orderItems = new ArrayList<>();
+        Receipt Receipt = new Receipt();
+        while (true) {
+            try {
+                input = inputView.getInput();
+                orderItems = Parser.parse(input);
+                //구매
+                Receipt = products.buyProductsIfYouCan(orderItems);
+                break;
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
         }
+
+        //멤버십?
+        Boolean membership = inputView.getInputMembership();
 
         outputView.printProducts(products.getProducts());
 
-
     }
 
+    static class Garbage {
+//        for (OrderItem orderItem : orderItems) {
+//                    System.out.println(orderItem.toString());
+//                }
+    }
 
     static class InputView {
         public String getInput() {
             System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
             return Console.readLine();
+        }
+
+        public Boolean getInputMembership() {
+            System.out.println("멤버십 할인을 받으시겠습니까? (Y/N)");
+            return getBoolean();
+        }
+
+        private Boolean getBoolean() {
+            if (Console.readLine().equalsIgnoreCase("y")) {
+                return true;
+            }
+            if (Console.readLine().equalsIgnoreCase("n")) {
+                return false;
+            }
+            throw new IllegalArgumentException("잘못된 입력입니다. Y/N만 입력 가능");
         }
     }
 

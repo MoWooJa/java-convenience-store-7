@@ -2,15 +2,9 @@ package store;
 
 import java.util.function.Supplier;
 
-public class InputHandler {
+public class RetryHandler {
 
-    private final InputView inputView;
-
-    public InputHandler(InputView inputView) {
-        this.inputView = inputView;
-    }
-
-    private <T> T handle(Supplier<T> supplier) {
+    protected <T> T handle(Supplier<T> supplier) {
         while (true) {
             try {
                 return supplier.get();

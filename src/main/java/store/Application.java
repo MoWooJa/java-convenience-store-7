@@ -24,27 +24,58 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        outputView.printProducts(products.getProducts());
-
-        String input;
-        List<OrderItem> orderItems = new ArrayList<>();
-        Receipt Receipt = new Receipt();
         while (true) {
-            try {
-                input = inputView.getInput();
-                orderItems = Parser.parse(input);
-                //구매
-                Receipt = products.buyProductsIfYouCan(orderItems);
-                break;
-            }catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+            outputView.printProducts(products.getProducts());
+
+            String input;
+            List<OrderItem> orderItems = new ArrayList<>();
+            Receipt receipt = new Receipt();
+            while (true) {
+                try {
+                    input = inputView.getInput();
+                    orderItems = Parser.parse(input);
+                    //구매
+                    receipt = products.buyProductsIfYouCan(orderItems);
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
             }
+
+
+            //멤버십?
+            boolean isMembership;
+            while (true) {
+                try {
+                    isMembership = inputView.getInputMembership();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+            int totalPrice = receipt.getTotalPrice();
+            int totalPromotionDiscount = receipt.getTotalPromotionDiscount();
+            int membershipDiscount = receipt.calculateMembershipDiscount(isMembership);
+            int finalPayAmount = receipt.calculateFinalPayAmount(totalPrice, totalPromotionDiscount, membershipDiscount);
+
+            int totalQuantity = receipt.getTotalQuantity();
+
+            String receiptStr = receipt.displayReceipt(totalPrice, totalPromotionDiscount, membershipDiscount, finalPayAmount, totalQuantity);
+
+            outputView.displayReceipt(receiptStr);
+
+            boolean reStartAgree;
+            while (true) {
+                try {
+                    reStartAgree = inputView.getReStart();
+                    break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
         }
-
-        //멤버십?
-        Boolean membership = inputView.getInputMembership();
-
-        outputView.printProducts(products.getProducts());
 
     }
 
@@ -66,13 +97,19 @@ public class Application {
         }
 
         private Boolean getBoolean() {
-            if (Console.readLine().equalsIgnoreCase("y")) {
+            String input = Console.readLine();
+            if (input.equalsIgnoreCase("y")) {
                 return true;
             }
-            if (Console.readLine().equalsIgnoreCase("n")) {
+            if (input.equalsIgnoreCase("n")) {
                 return false;
             }
             throw new IllegalArgumentException("잘못된 입력입니다. Y/N만 입력 가능");
+        }
+
+        public boolean getReStart() {
+            System.out.println("감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)");
+            return getBoolean();
         }
     }
 
@@ -106,6 +143,10 @@ public class Application {
                 }
             }
 
+        }
+
+        public void displayReceipt(String receipt) {
+            System.out.println(receipt);
         }
     }
 

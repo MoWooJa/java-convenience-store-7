@@ -25,7 +25,7 @@ public class Products {
         }
 
         //throw가 안된 경우(재고 초과가 없는 정상 케이스)
-        Receipt orderRecords = new Receipt();
+        Receipt Receipt = new Receipt();
 
         for (OrderItem orderItem : orderItems) {
             Product findProduct = findProduct(orderItem.getItemName());
@@ -35,15 +35,16 @@ public class Products {
             //필수로 고쳐야 함
             OrderRecord orderRecord = new OrderRecord(
                     orderItem.getItemName(),
+                    findProduct.getPrice(),
                     orderItem.getQuantity(),
-                    orderItem.getQuantity(),
+                    0,
                     0
             );
             //필수로 고쳐야 함
             //필수로 고쳐야 함
-            orderRecords.addRecord(orderRecord);
+            Receipt.addRecord(orderRecord);
         }
-        return orderRecords;
+        return Receipt;
     }
 
     private Product findProduct(String productName) {

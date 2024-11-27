@@ -16,4 +16,13 @@ public class Promotion {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public boolean isPromotion(LocalDate currentDate) {
+        return (currentDate.isEqual(startDate) || currentDate.isAfter(startDate)) &&
+                (currentDate.isEqual(endDate) || currentDate.isBefore(endDate));
+
+    }
+    public int calculateGroupSize() {
+        return buy+get;
+    }
 }

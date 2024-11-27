@@ -1,6 +1,7 @@
 package store;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.DateTimes;
 import store.parser.Parser;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Application {
@@ -30,12 +32,21 @@ public class Application {
             String input;
             List<OrderItem> orderItems = new ArrayList<>();
             Receipt receipt = new Receipt();
+            LocalDate currentTime;
             while (true) {
                 try {
                     input = inputView.getInput();
                     orderItems = Parser.parse(input);
                     //구매
-                    receipt = products.buyProductsIfYouCan(orderItems);
+                    currentTime = DateTimes.now().toLocalDate();
+                    for (OrderItem orderItem : orderItems) {
+                        Product foundProduct = products.findProduct(orderItem.getItemName());
+                        boolean promotionWithinDate = promotions.isPromotionWithinDate(foundProduct.getPromotionName(), currentTime);
+
+                        int promotionGroupSize = promotions.calculatePromotionGroupSize(orderItem.getItemName());
+                        OrderRecord orderRecord = products.buyProductsIfYouCan(orderItem, promotionWithinDate,promotionGroupSize);
+                        receipt.addRecord(orderRecord);
+                    }
                     break;
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());

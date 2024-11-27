@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Products {
-    Map<String,Product> products;
+    Map<String, Product> products;
 
-    public Products(Map<String,Product> products) {
+    public Products(Map<String, Product> products) {
         this.products = products;
     }
 
@@ -14,25 +14,20 @@ public class Products {
 
     }
 
-    public Map<String,Product> getProducts() {
+    public Map<String, Product> getProducts() {
         return products;
     }
 
-    public Receipt buyProductsIfYouCan(List<OrderItem> orderItems) {
-        for (OrderItem orderItem : orderItems) {
-            Product findProduct = findProduct(orderItem.getItemName());
-            findProduct.canBuyProduct(orderItem.getQuantity());
-        }
+    public OrderRecord buyProductsIfYouCan(OrderItem orderItem, boolean promotionWithinDate,int groupSize) {
+        Product findProduct = findProduct(orderItem.getItemName());
+        //프로모션 기간이면?
+        if (promotionWithinDate) {
 
-        //throw가 안된 경우(재고 초과가 없는 정상 케이스)
-        Receipt Receipt = new Receipt();
+            //(체크) 프로모션 기간인데 살 수 있는지?
+            findProduct.canBuyProductIfPromotion(orderItem.getQuantity());
+            //throw가 안된 경우(재고 초과가 없는 정상 케이스)
+            findProduct.(orderItem.getQuantity());
 
-        for (OrderItem orderItem : orderItems) {
-            Product findProduct = findProduct(orderItem.getItemName());
-            findProduct.decrementRegularQuantity(orderItem.getQuantity());
-
-            //필수로 고쳐야 함
-            //필수로 고쳐야 함
             OrderRecord orderRecord = new OrderRecord(
                     orderItem.getItemName(),
                     findProduct.getPrice(),
@@ -40,14 +35,31 @@ public class Products {
                     0,
                     0
             );
-            //필수로 고쳐야 함
-            //필수로 고쳐야 함
-            Receipt.addRecord(orderRecord);
+            return orderRecord;
         }
-        return Receipt;
+
+        //프로모션 기간이 아니면?
+
+        //(체크) 프로모션 기간이 아닌데 살 수 있는지?
+        findProduct.canBuyProductIfNonPromotion(orderItem.getQuantity());
+        //throw가 안된 경우(재고 초과가 없는 정상 케이스)
+        findProduct.decrementRegularQuantity(orderItem.getQuantity());
+
+        OrderRecord orderRecord = new OrderRecord(
+                orderItem.getItemName(),
+                findProduct.getPrice(),
+                orderItem.getQuantity(),
+                0,
+                0
+        );
+        return orderRecord;
+
+
     }
 
-    private Product findProduct(String productName) {
+
+
+    public Product findProduct(String productName) {
         for (Map.Entry<String, Product> entry : products.entrySet()) {
             if (entry.getKey().equals(productName)) {
                 return entry.getValue();

@@ -1,11 +1,13 @@
-package store;
+package store.order;
 
 import java.util.ArrayList;
 import java.util.List;
+import store.product.Product;
+import store.product.ProductService;
+import store.StockService;
 
 public class OrderService {
     private final StockService stockService;
-
     private final ProductService productService;
 
     public OrderService(StockService stockService, ProductService productService) {

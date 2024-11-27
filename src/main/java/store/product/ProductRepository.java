@@ -1,8 +1,9 @@
-package store;
+package store.product;
 
 import static store.Exceptions.NO_PRODUCT;
 
 import java.util.List;
+import store.product.Product;
 
 public class ProductRepository {
 

@@ -2,14 +2,16 @@ package store;
 
 import static store.Exceptions.NOT_ENOUGH_STOCK;
 
+import store.product.Product;
+
 public class Stock {
     private final Product product;
 
-    int promotion;
+    private int promotion;
 
-    int general;
+    private int general;
 
-    int total;
+    private int total;
 
     public Stock(Product product, int promotion, int general) {
         this.product = product;
@@ -26,5 +28,17 @@ public class Stock {
         if (quantity > total) {
             throw new IllegalArgumentException(NOT_ENOUGH_STOCK.getMessage());
         }
+    }
+
+    public int getPromotion() {
+        return promotion;
+    }
+
+    public int getGeneral() {
+        return general;
+    }
+
+    public int getTotal() {
+        return total;
     }
 }

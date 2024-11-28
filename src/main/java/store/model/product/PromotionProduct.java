@@ -5,6 +5,7 @@ import store.model.promotion.Promotion;
 
 public class PromotionProduct implements Product {
 
+    public static final String DELIMITER = ",";
     private final String name;
     private final int price;
     private final int quantity;
@@ -22,5 +23,11 @@ public class PromotionProduct implements Product {
         int price = Integer.parseInt(productInfo.get(1));
         int quantity = Integer.parseInt(productInfo.get(2));
         return new PromotionProduct(name, price, quantity, promotion);
+    }
+
+    @Override
+    public String getInfo() {
+        return String.join(DELIMITER, name, Integer.toString(price),
+                Integer.toString(quantity), promotion.getPromotionName());
     }
 }

@@ -1,8 +1,10 @@
 package store.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import store.dto.DisplayInfo;
 import store.model.product.Product;
 import store.model.product.ProductFactory;
 import store.model.product.Products;
@@ -19,7 +21,7 @@ public class Stock {
     }
 
     public static Stock from(List<String> productsData, Map<String, Promotion> promotions) {
-        Map<String, Products> stock = new HashMap<>();
+        Map<String, Products> stock = new LinkedHashMap<>();
         for (String productData : productsData) {
             List<String> productInfo = List.of(productData.split(SEPARATOR));
             String productName = productInfo.getFirst();
@@ -33,6 +35,16 @@ public class Stock {
         if (stock.containsKey(productName)) {
             stock.get(productName).add(product);
         }
-        stock.put(productName, Products.inIt(product));
+        if (!stock.containsKey(productName)) {
+            stock.put(productName, Products.inIt(product));
+        }
+    }
+
+    public List<DisplayInfo> getDisplayProductsInfo() {
+        List<DisplayInfo> displayInfos = new ArrayList<>();
+        for (String productName : stock.keySet()) {
+            displayInfos.add(stock.get(productName).getDisplayInfo());
+        }
+        return displayInfos;
     }
 }

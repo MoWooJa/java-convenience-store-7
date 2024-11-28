@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Promotion {
 
-    private static final String DATE_TIME_FORMAT = "yyyy-MM-DD";
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd";
 
     private final String name;
     private final int buy;
@@ -31,5 +31,9 @@ public class Promotion {
         String startDate = promotionInformation.get(3);
         String endDate = promotionInformation.get(4);
         return new Promotion(name, buy, get, startDate, endDate);
+    }
+
+    public String getPromotionName() {
+        return name;
     }
 }

@@ -3,6 +3,7 @@ package store.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import store.dto.Order;
 import store.model.promotion.Promotion;
 import store.view.outputview.DisplayView;
 import store.view.outputview.OutputView;
@@ -34,6 +35,11 @@ public class Store {
             promotions.put(promotionInformation.getFirst(), Promotion.of(promotionInformation));
         }
         return promotions;
+    }
+
+    public void checkStock(Order order) {
+        String orderName = order.getOrderName();
+        stock.checkName(orderName);
     }
 
     public static void main(String[] args) {

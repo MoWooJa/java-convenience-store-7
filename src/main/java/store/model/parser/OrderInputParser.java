@@ -1,9 +1,10 @@
-package store.model.order;
+package store.model.parser;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import store.dto.Order;
 import store.exception.ExceptionType;
 import store.exception.InputException;
 

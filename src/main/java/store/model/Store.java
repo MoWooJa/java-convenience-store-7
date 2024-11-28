@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import store.model.promotion.Promotion;
+import store.view.outputview.DisplayView;
+import store.view.outputview.OutputView;
 
 public class Store {
 
@@ -34,4 +36,9 @@ public class Store {
         return promotions;
     }
 
+    public static void main(String[] args) {
+        Store store = new Store();
+        OutputView test = new DisplayView();
+        test.display(store.stock.getDisplayProductsInfo());
+    }
 }

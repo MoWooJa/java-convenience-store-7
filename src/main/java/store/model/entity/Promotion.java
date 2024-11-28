@@ -22,4 +22,9 @@ public class Promotion {
     public boolean isInPeriod(Date date) {
         return period.isInPromotionPeriod(date);
     }
+
+    @Override
+    public String toString() {
+        return name + " " + type.toString() + " " + period.toString();
+    }
 }

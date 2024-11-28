@@ -25,10 +25,10 @@ class PromotionPeriodTest {
 
     @BeforeEach
     void setUp() {
-        LocalDateTime startTime1 = DateParser.parse("2024-11-01");
-        LocalDateTime endTime1 = DateParser.parse("2024-11-30");
-        LocalDateTime startTime2 = DateParser.parse("2024-01-01");
-        LocalDateTime endTime2 = DateParser.parse("2024-12-31");
+        String startTime1 = "2024-11-01";
+        String endTime1 = "2024-11-30";
+        String startTime2 = "2024-01-01";
+        String endTime2 = "2024-12-31";
 
        promotionPeriod1 = new PromotionPeriod(startTime1, endTime1);
        promotionPeriod2 = new PromotionPeriod(startTime2, endTime2);

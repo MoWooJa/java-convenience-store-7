@@ -15,10 +15,10 @@ class PromotionTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        LocalDateTime startTime = DateParser.parse("2024-01-01");
-        LocalDateTime endTime = DateParser.parse("2024-12-31");
+        String startTime = "2024-01-01";
+        String endTime = "2024-12-31";
         PromotionPeriod period = new PromotionPeriod(startTime, endTime);
-        promotion = new Promotion("MD추천상품",PromotionType.BUY_ONE_GET_TWO, period);
+        promotion = new Promotion("MD추천상품",PromotionType.BUY_TWO_GET_ONE, period);
 
     }
 

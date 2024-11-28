@@ -1,9 +1,12 @@
 package store.model.promotion;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import store.model.orderannounce.AnnounceCode;
+import store.model.orderannounce.OrderAnnounceRequest;
 
 public class Promotion {
 
@@ -31,6 +34,22 @@ public class Promotion {
         String startDate = promotionInformation.get(3);
         String endDate = promotionInformation.get(4);
         return new Promotion(name, buy, get, startDate, endDate);
+    }
+
+    public boolean isValidDate() {
+        LocalDateTime today = DateTimes.now();
+        return today.isAfter(startDate) && today.isBefore(endDate);
+    }
+
+    public OrderAnnounceRequest getAnnounceCode(int orderAmount) {
+        int mod = orderAmount % (buy + get);
+        if (mod == 0) {
+            return new OrderAnnounceRequest(AnnounceCode.SUCCESS, null, mod);
+        }
+        if (mod == buy) {
+            return new OrderAnnounceRequest(AnnounceCode.MORE_FREE, null, get);
+        }
+        return new OrderAnnounceRequest(AnnounceCode.PART_NO_PROMOTION, null, mod);
     }
 
     public String getPromotionName() {

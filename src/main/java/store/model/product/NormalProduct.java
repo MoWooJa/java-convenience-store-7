@@ -26,4 +26,9 @@ public class NormalProduct implements Product {
     public String getInfo() {
         return String.join(DELIMITER, name, Integer.toString(price), Integer.toString(quantity), "null");
     }
+
+    @Override
+    public int reduceOrderAmount(int orderAmount) {
+        return orderAmount - quantity;
+    }
 }

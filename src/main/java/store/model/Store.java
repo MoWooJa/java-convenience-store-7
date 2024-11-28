@@ -38,8 +38,8 @@ public class Store {
     }
 
     public void checkStock(Order order) {
-        String orderName = order.getOrderName();
-        stock.checkName(orderName);
+        stock.checkName(order);
+        stock.checkAmount(order);
     }
 
     public static void main(String[] args) {

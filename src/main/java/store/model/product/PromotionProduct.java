@@ -30,4 +30,9 @@ public class PromotionProduct implements Product {
         return String.join(DELIMITER, name, Integer.toString(price),
                 Integer.toString(quantity), promotion.getPromotionName());
     }
+
+    @Override
+    public int reduceOrderAmount(int orderAmount) {
+        return orderAmount - quantity;
+    }
 }

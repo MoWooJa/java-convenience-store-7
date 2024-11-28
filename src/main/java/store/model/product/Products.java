@@ -3,6 +3,8 @@ package store.model.product;
 import java.util.Arrays;
 import java.util.List;
 import store.dto.DisplayInfo;
+import store.exception.ExceptionType;
+import store.exception.InputException;
 
 public class Products {
 
@@ -50,5 +52,16 @@ public class Products {
 
     private boolean isOnlyPromotion() {
         return products.get(NORMAL_PRODUCT_INDEX) == null;
+    }
+
+    public void checkAmount(int orderAmount) {
+        for (Product product : products) {
+            if (product != null) {
+                orderAmount = product.reduceOrderAmount(orderAmount);
+            }
+        }
+        if (orderAmount > 0) {
+            throw new InputException(ExceptionType.NO_STOCK_EXCEPTION);
+        }
     }
 }

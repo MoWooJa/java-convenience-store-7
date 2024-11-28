@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import store.dto.DisplayInfo;
+import store.dto.Order;
 import store.exception.ExceptionType;
 import store.exception.InputException;
 import store.model.product.Product;
@@ -50,9 +51,13 @@ public class Stock {
         return displayInfos;
     }
 
-    public void checkName(String orderName) {
-        if (!stock.containsKey(orderName)) {
+    public void checkName(Order order) {
+        if (!stock.containsKey(order.getOrderName())) {
             throw new InputException(ExceptionType.NO_PRODUCT_EXCEPTION);
         }
+    }
+
+    public void checkAmount(Order order) {
+        stock.get(order.getOrderName()).checkAmount(order.getOrderAmount());
     }
 }

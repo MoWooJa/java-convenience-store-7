@@ -9,4 +9,6 @@ public class Inventory {
     public Inventory(List<Product> products) {
         this.products = products;
     }
+
+
 }

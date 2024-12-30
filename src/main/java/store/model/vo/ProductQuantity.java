@@ -1,11 +1,14 @@
 package store.model.vo;
 
 public class ProductQuantity {
-    private int generalQuantity;
-    private int promotionalQuantity;
+    private int generalQuantity = 0;
+    private int promotionalQuantity = 0;
 
-    public ProductQuantity(int generalQuantity, int promotionalQuantity) {
+    public void updateGeneralQuantity(int generalQuantity) {
         this.generalQuantity = generalQuantity;
+    }
+
+    public void updatePromotionalQuantity(int promotionalQuantity) {
         this.promotionalQuantity = promotionalQuantity;
     }
 

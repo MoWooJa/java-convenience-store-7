@@ -1,8 +1,7 @@
 package store.model.type;
 
-import store.util.DateParser;
-
 public enum PromotionType {
+    NONE(0,0),
     BUY_ONE_GET_ONE(1, 1),
     BUY_TWO_GET_ONE(2, 1);
 
@@ -13,7 +12,6 @@ public enum PromotionType {
         this.buyCondition = buyCondition;
         this.freePresentQuntity = freePresentQuntity;
     }
-
 
     public static PromotionType getByBuy(String buy) {
         if (BUY_ONE_GET_ONE.buyCondition().equals(buy)) {

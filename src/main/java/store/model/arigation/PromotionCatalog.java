@@ -10,4 +10,13 @@ public record PromotionCatalog(List<Promotion> promotions) {
     public List<Promotion> promotions() {
         return Collections.unmodifiableList(promotions);
     }
+
+    public Promotion getByPromotionName(String promotionName) {
+        for (Promotion promotion : promotions()) {
+            if (promotion.getName().equals(promotionName)) {
+                return promotion;
+            }
+        }
+        return null;
+    }
 }

@@ -17,6 +17,10 @@ public class PromotionCatologFactory {
     public static final int INDEX_OF_BUY_CONDITION = 1;
     public static final int INDEX_OF_START_DATE = 3;
     public static final int INDEX_OF_END_DATE = 4;
+    public static final String NULL_PROMOTION_NAME = "null";
+    public static final String NULL_PROMOTION_START_DATE = "2024-01-01";
+    public static final String NULL_PROMOTION_END_DATE = "2024-12-31";
+
     private final FileReader fileReader;
     private List<String> fileContents;
     private PromotionCatalog catalog;
@@ -28,11 +32,19 @@ public class PromotionCatologFactory {
     public PromotionCatalog create() throws FileNotFoundException {
         setUp();
         List<Promotion> promotions = new ArrayList<>();
+        promotions.add(nullPromotionFactory());
         for (String promotionInformation : fileContents) {
             splitAndCreatePromotion(promotionInformation, promotions);
         }
         catalog = new PromotionCatalog(promotions);
         return catalog;
+    }
+
+    private Promotion nullPromotionFactory() {
+        String name = NULL_PROMOTION_NAME;
+        PromotionType type = PromotionType.NONE;
+        PromotionPeriod period = new PromotionPeriod(NULL_PROMOTION_START_DATE, NULL_PROMOTION_END_DATE);
+        return new Promotion(name, type, period);
     }
 
     private void splitAndCreatePromotion(String promotionInformation, List<Promotion> promotions) {
